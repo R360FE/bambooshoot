@@ -1,0 +1,45 @@
+<link rel='stylesheet' href='/stylesheets/index.css' />
+<a class="btn add" href="/add">添加新接口</a>
+<div class="search-wrap">
+	<div class="input-wrap"><input class="sname" type="text" placeholder="请输入要查询的接口名称" /></div>
+	<div class="btn search">查询接口</div>
+</div>
+<div class="search-result">
+
+</div>
+<script type="text/javascript">
+	$(".search").on("click",function(){
+		var name = $(".sname").val().trim(),
+			$result = $(".search-result");
+		if(!name){
+			alert("请输入要查询的接口名称！");
+		}else{
+			$.ajax({
+                type: "POST",
+                url: "/search",
+                data: {name: name},
+                dataType: "json",
+                success: function(res){
+                    if(!res.status){
+                        var data=res.data,
+                        	$html = "";
+                        if(!data.total){
+                        	$html = $("<div class='result'>很抱歉没有找到您所需的接口~</div>");
+                        }else{
+                        	var arr = ["<div class='result'>共为您找到"+data.total+"个接口</div>"];
+	                        $html = arr.concat(data.list.map(function(item,index){
+	                        	return "<div class='item' data-name='"+item.name+"'><div class='item-name'>" + item.name + "</div><div class='item-desc'>" + item.desc + "</div><div class='item-go'>查看</div></div>";
+	                        })).join("");
+                        }                     
+                        $result.empty().append($html);
+                    } else{
+                        alert("查询失败，请稍后重试！");        
+                    }
+                }
+            })
+		}
+	});
+	$(document).delegate(".item-go","click",function(e){
+		window.location.href = "/add?name=" + $(e.currentTarget).parent().data("name");
+	})
+</script>

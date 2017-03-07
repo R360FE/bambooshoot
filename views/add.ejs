@@ -1,0 +1,109 @@
+<div class="new">
+    <%if(edit){%>
+    <div class="title">查看接口</div>
+    <%}else{%>
+    <div class="title">新增接口</div>
+    <%}%>
+    <div class="api">
+        <div class="tlt">接口名称</div>
+        <div class="input-wrap"><input name="name" placeholder="请输入接口名称" value="<%= name %>"></input></div>
+    </div>
+    <div class="api">
+        <div class="tlt">接口描述</div>
+        <div class="input-wrap"><input name="desc" placeholder="请输入接口描述" value="<%= desc %>" ></input></div>
+    </div>
+    <div class="new-head">
+        <div class="unfmt">
+            <p class="desc">接口返回原始数据RAWDATA</p>
+            <p class="tip">key及string类型，请加双引号""，eg. {"name":"zhangyy"}</p>
+        </div>
+        <div class="btn doformat">点击预览</div>
+        <div class="fmt">
+            <p class="desc">格式化数据JSON Format</p>
+            <p class="tip">可用其他强大工具进行格式校验，如bejson</p>
+        </div>
+        <div class="btn-group">
+            <div class="btn save">保存接口</div>
+            <% if(edit){ %>
+            <div class="btn remove">删除接口</div>
+            <% } %>
+        </div>
+    </div>
+    <div class="new-body">
+        <textarea class="unformat"><%=json%></textarea>
+        <div class="formatted"></div>
+    </div>       
+</div>
+<script type="text/javascript" src="/javascripts/jquery.jsonview.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/stylesheets/jquery.jsonview.min.css" />
+<% if(edit){%>
+<script>
+    try{
+        $(".formatted").JSONView( JSON.parse($(".unformat").val()) );
+    }catch(e){
+
+    }    
+</script>
+<%}%>
+<script type="text/javascript">
+    $(function(){
+        var json = "",
+            $unformat = $(".unformat"),
+            $name = $("input[name=name]"),
+            $desc = $("input[name=desc]");
+        $(".doformat").on("click",function(){
+            json = $unformat.val();
+            try{
+                $(".formatted").JSONView( JSON.parse(json) );
+                passed = true;
+            }catch(e){
+                passed = false;
+                $(".formatted").text(e.message);
+            }              
+        });
+
+        $(".save").on("click",function(){
+            json = $unformat.val();
+            var name = $name.val(),
+                desc = $desc.val();
+            if(/^\/\w{1,}/.test(name)){
+                try{
+                    if(JSON.parse(json)){
+                        $.ajax({
+                            type: "POST",
+                            url: "/save",
+                            data: {json: json,name: name,desc: desc},
+                            dataType: "json",
+                            success: function(res){
+                                alert(res.msg);
+                            }
+                        })
+                    }
+                }catch(e){
+                    alert("接口数据有误，请修改后进行保存！");
+                } 
+            }else{
+                alert("请输入正确的接口名称，以/开头");
+            }
+                      
+        })
+
+        $(document).delegate(".remove","click",function(){
+            $.ajax({
+                type: "POST",
+                url: "/test?a=1",
+                data: {name: location.search.split("name=")[1].split("&")[0]},
+                dataType: "json",
+                success: function(res){
+                    if(!res.status){
+                        alert("删除成功！");
+                        location.href = "/";
+                    } else{
+                        alert("删除失败，请稍后重试！");        
+                    }
+
+                }
+            })
+        })
+    })
+</script>
