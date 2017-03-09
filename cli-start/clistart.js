@@ -8,14 +8,11 @@ var app = require('../app');
 var debug = require('debug')('mockface:server');
 var https = require('https');
 var fs = require('fs');
+var open = require('open');
 
 /**
  * Get port from environment and store in Express.
  */
-
-
-
-
 var options = {
     key: fs.readFileSync('./cert/privatekey.pem'),
     cert: fs.readFileSync('./cert/certificate.pem')
@@ -80,12 +77,15 @@ server.serverstart = function(severport){
     var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
     debug('Listening on ' + bind);
   }
-  
+
   app.set('port', port);
 
   
   server = https.createServer(options, app).listen(port, function() {
-    console.log("https server is listening on port " + port);
+        console.log("https server is listening on port " + port);
+        var targurl = "https://127.0.0.1:"+port        
+        console.log(targurl);
+        open(targurl);        
   });
   
 
