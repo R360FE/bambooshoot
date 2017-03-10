@@ -10,7 +10,6 @@ var add = function(req,res,next){
 			return item.name == name;
 		})[0].desc;
 	}catch(e){
-		console.log(e.message);
 		name = "";
 	}
 	res.render('add',{name: name,desc: desc,json:JSON.stringify(json),edit:edit});

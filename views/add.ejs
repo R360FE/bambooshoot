@@ -91,7 +91,7 @@
         $(document).delegate(".remove","click",function(){
             $.ajax({
                 type: "POST",
-                url: "/test?a=1",
+                url: "/remove",
                 data: {name: location.search.split("name=")[1].split("&")[0]},
                 dataType: "json",
                 success: function(res){
