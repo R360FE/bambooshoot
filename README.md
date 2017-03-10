@@ -5,19 +5,30 @@ an application used by FE to generate mockdata of server's interface response. I
 
 ##How to use it?
 
-1) copy the source to your local path, then install the dependencies.
+### 1 use npm install bambootshoot.
+      
+      npm install bambootshoot
+ 
+### 2 start the server and the default port is 3000 if you don't pass the option -p
 
-npm install
+      bamboot start
 
-2) start the server on port 3000
+the browser will open the mock server site. eg:https://127.0.0.1:3000
 
-   . node start
-   . node ./bin/www
+### 3 current commands
 
-3) visit https://127.0.0.1:3000 to add/delete/update/search your interfaces that you want to replace the serverside response.
+You can use 'bamboot' to list the commands that current support
 
-4) use Charles to mock the response.
-
-   .Tools -> Map Remote -> add interfaces or import interfaces from an xml file
-
-
+      bamboot
+      
+      Usage: bamboo <command>
+      
+      Commands:
+      
+         start    start mock server,you can pass option '-p' to set the server port
+       
+       Options:
+         
+         -v, --version  output the version number
+         
+         -p, --port  set the server port
