@@ -1,10 +1,10 @@
 {
-  "name": "bamboo",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/bamboo start"
+  "name": "bambooshoot",
+  "bin": {
+    "bamboo": "bin/bamboo"
   },
+  "version": "0.0.4",
+  "private": false,
   "dependencies": {
     "bluebird": "^3.4.7",
     "body-parser": "~1.16.0",
@@ -19,5 +19,9 @@
     "nodemon": "^1.11.0",
     "open": "0.0.5",
     "serve-favicon": "~2.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/R360FE/bambooshoot.git"
   }
 }

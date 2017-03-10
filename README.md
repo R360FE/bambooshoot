@@ -11,15 +11,15 @@ an application used by FE to generate mockdata of server's interface response. I
  
 ### 2 start the server and the default port is 3000 if you don't pass the option -p
 
-      bamboot start
+      bamboo start
 
 the browser will open the mock server site. eg:https://127.0.0.1:3000
 
 ### 3 current commands
 
-You can use 'bamboot' to list the commands that current support
+You can use 'bamboo' to list the commands that current support
 
-      bamboot
+      bamboo
       
       Usage: bamboo <command>
       

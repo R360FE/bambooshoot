@@ -9,13 +9,13 @@ var debug = require('debug')('mockface:server');
 var https = require('https');
 var fs = require('fs');
 var open = require('open');
-
+var path = require("path");
 /**
  * Get port from environment and store in Express.
  */
 var options = {
-    key: fs.readFileSync('./cert/privatekey.pem'),
-    cert: fs.readFileSync('./cert/certificate.pem')
+    key: fs.readFileSync(path.join(__dirname,"..", '/cert/privatekey.pem')),
+    cert: fs.readFileSync(path.join(__dirname,"..",'/cert/certificate.pem'))
 };
 
 /**
