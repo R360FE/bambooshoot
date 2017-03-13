@@ -1,12 +1,13 @@
+var path = require("path");
 var add = function(req,res,next){
 	var name = req.query.name, //接口名
 		desc = "",
 		json = {},
 		edit = false;
 	try{
-		json = require("../mockdata/"+name.replace(/\//gi,"_") + ".json");
+		json = require(path.join(__dirname,"..","/mockdata/"+name.replace(/\//gi,"_") + ".json"));
 		edit = true;
-		desc = require("../mockdata/map.json").list.filter(function(item){
+		desc = require(path.join(__dirname,"..","/mockdata/map.json")).list.filter(function(item){
 			return item.name == name;
 		})[0].desc;
 	}catch(e){

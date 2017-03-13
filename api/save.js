@@ -2,6 +2,7 @@ var Promise = require("bluebird");
 var fs = require('fs');
 Promise.promisifyAll(fs); // Now you can use fs as if it was designed to use bluebird promises from the beginning
 var faces = require('../mockdata/map.json');
+var path = require("path");
 
 var save = function(req, res, next) {
 	var json = req.body.json,
@@ -23,8 +24,8 @@ var save = function(req, res, next) {
 		})
 	}
 	Promise.all([
-		    fs.writeFile("./mockdata/"+filename+".json",json),
-		    fs.writeFile("./mockdata/map.json",JSON.stringify(faces))
+		    fs.writeFile(path.join(__dirname,"..","/mockdata/"+filename+".json"),json),
+		    fs.writeFile(path.join(__dirname,"..","./mockdata/map.json"),JSON.stringify(faces))
 		]).spread(function(err1, err2) {
 		    if(!err1 && !err2){
 		    	res.json({
