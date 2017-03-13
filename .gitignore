@@ -1,3 +1,4 @@
 #过滤node_modules
 .DS_Store
+mockdata
 node_modules
