@@ -17,7 +17,7 @@ var options = {
     // key: fs.readFileSync(path.join(__dirname,"..", '/cert/rong.key')),
     // cert: fs.re adFileSync(path.join(__dirname,"..",'/cert/rong.crt'))
     key: fs.readFileSync(path.join(__dirname,"..", '/cert/privatekey.pem')),
-    cert: fs.readFileSync(path.join(__dirname,"..", '/cert/certificate.crt')
+    cert: fs.readFileSync(path.join(__dirname,"..", '/cert/certificate.crt'))
 };
 
 /**
