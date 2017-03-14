@@ -21,11 +21,13 @@ var save = function(req, res, next) {
 			if(item.name == name){
 				item.desc = desc;
 			}
+			return item;
 		})
 	}
+
 	Promise.all([
-		    fs.writeFile(path.join(__dirname,"..","/mockdata/"+filename+".json"),json),
-		    fs.writeFile(path.join(__dirname,"..","./mockdata/map.json"),JSON.stringify(faces))
+		    fs.writeFileAsync(path.join(__dirname,"..","/mockdata/"+filename+".json"),json),
+		    fs.writeFileAsync(path.join(__dirname,"..","/mockdata/map.json"),JSON.stringify(faces))
 		]).spread(function(err1, err2) {
 		    if(!err1 && !err2){
 		    	res.json({

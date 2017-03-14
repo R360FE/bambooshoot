@@ -18,7 +18,7 @@ var remove = function(req, res, next) {
 		"list": faces
 	};
 	Promise.all([
-	    fs.writeFile("./mockdata/map.json",JSON.stringify(json)),
+	    fs.writeFileAsync("./mockdata/map.json",JSON.stringify(json)),
 	    fs.unlink("./mockdata/"+name.replace(/\//gi,"_")+".json")
 	]).spread(function(err1, err2) {
 	    if(!err1 && !err2){
