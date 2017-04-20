@@ -1,0 +1,43 @@
+<table class="table table-hover table-striped">
+    <tr>
+        <th width="5%">ID</th>
+        <th width="25%">名称</th>
+        <th width="40%">描述</th>
+        <th width="20%">创建日期</th>
+        <th width="10%">操作</th>
+    </tr>
+
+    <% list.forEach(function(item, index){ %>
+    <tr>
+        <td><%= item.id %></td>
+        <td><%= item.name %></td>
+        <td><%= item.desc %></td>
+        <td><%= item.postTime %></td>
+        <td>
+            <a href="/mockdata/edit?name=<%= item.name %>">编辑</a>
+            <a href="javascript:" class="delete" data-name=<%= item.name %>>删除</a>
+        </td>
+    </tr>
+    <% }) %>
+
+</table>
+
+<nav aria-label="...">
+  <ul class="pager">
+
+    <% if( (page-1)>0 ){ %>
+     <li><a href="/mockdata?page=<%= page-1 %>">上一页</a></li>
+    <% }else{ %>
+    <li><span>上一页</span></li>
+    <% } %>
+
+    <li>一共有<%= count %>条数据，每页显示<%= limit %>条数据，<%= page %>/<%= pages %></li>
+
+    <% if( (page+1)<=pages ){ %>
+     <li><a href="/mockdata?page=<%= page+1 %>">下一页</a></li>
+    <% }else{ %>
+    <li><span>下一页</span></li>
+    <% } %>
+
+  </ul>
+</nav>

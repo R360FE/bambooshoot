@@ -5,13 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
+var ejs = require("ejs");
 var fs = require("fs");
+
+global.baseDir = __dirname;
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.engine('html', ejs.renderFile);  
+app.set('view engine', 'html');
 app.use(partials());
 
 // uncomment after placing your favicon in /public
@@ -33,17 +37,33 @@ app.all('*', function(req, res, next) {
 });
 
 //配置路由
-var routes =require("./routes/routes");
-routes(app);
+//var routes =require("./routes/routes");
+//routes(app);
+
+/*
+* 根据不同的功能划分模块
+* */
+app.use('/', require('./routes/main'));
+app.use('/mockdata', require('./routes/mockdata'));
+app.use('/api/mockdata', require('./routes/mockdata_api'));
+
 
 //接口mock数据返回
 app.use(function(req,res,next){
-  var filename = req.path.replace(/\//gi,"_");
-  var fp = __dirname + '/mockdata/'+filename+".json";
+  var filename = req.path.match(/\/?(\S+)/)[1];
+  var mockdata_filename = filename.replace(/\//gi,"__");
+ 
+  var fp = __dirname + '/mockdata/'+mockdata_filename+".json";
   fs.exists(fp, function (exists) {
     if(exists){
-      var data = require("./mockdata/"+filename+".json");
+      //var data = require("./mockdata/"+filename+".json");
+      
+      var data = fs.readFileSync(fp);
+      data = data.toString();
+      data = JSON.parse(data);
+
       res.json(data);
+
     }else{
       next();
     }

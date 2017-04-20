@@ -1,0 +1,6 @@
+.unformat,.formatted{
+	width: 100%;
+	font-size: 14px;
+	border: 1px solid #666;
+	min-height: 300px;
+}
