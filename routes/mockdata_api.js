@@ -1,24 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var baseDir = global.baseDir;
+var util = require('../lib/util.js');
 var Promise = require("bluebird");
 var fs = require("fs");
 
 Promise.promisifyAll(fs); // Now you can use fs as if it was designed to use bluebird promises from the beginning
-
-function readJsonFile(fp){
-	var data = fs.readFileSync(fp);
-
-	data = data.toString();
-
-	try{
-		data = JSON.parse(data);
-	}catch(e){
-		data = {};
-	}
-	
-	return data;
-}
 
 /**
  * api mockdata 保存
@@ -29,7 +16,7 @@ router.post('/save', function (req, res, next){
 	var desc = req.body.desc;
 	var json = req.body.json;
 	var mapPath = baseDir + "/mockdata/map.json";
-	var mapData = readJsonFile(mapPath);
+	var mapData = util.readJsonFile(mapPath);
 	var list = mapData.list || [];
 	var filename = name.match(/\/?(\S+)/)[1];
 	var hasFace = true;
@@ -91,7 +78,7 @@ router.post('/search', function (req, res, next){
 
 	var name = req.body.name;
 	var mapPath = baseDir + "/mockdata/map.json";
-	var mapData = readJsonFile(mapPath);
+	var mapData = util.readJsonFile(mapPath);
 	var list = mapData.list || [];
 	var filename = name.match(/\/?(\S+)/)[1];
 
@@ -102,7 +89,7 @@ router.post('/search', function (req, res, next){
 	// 修改id编号
 	mockArr.forEach(function(item, index){
 		item.id = index+1;
-		item.postTime = formatDate(item.postTime);
+		item.postTime = util.formatDate(item.postTime);
 	});
 
 	res.json({
@@ -117,7 +104,7 @@ router.post('/delete', function (req, res, next){
 
 	var name = req.body.name;
 	var mapPath = baseDir + "/mockdata/map.json";
-	var mapData = readJsonFile(mapPath);
+	var mapData = util.readJsonFile(mapPath);
 	var list = mapData.list || [];
 	var filename = name.match(/\/?(\S+)/)[1];
 
@@ -164,23 +151,5 @@ router.post('/delete', function (req, res, next){
 	});
 
 });
-
-function formatDate(d) {
-    var date1 = new Date(d);
-    var y = date1.getFullYear();
-    var m = (date1.getMonth()+1);
-    var d = date1.getDate();
-    var h = date1.getHours();
-    var mm = date1.getMinutes();
-    var s = date1.getSeconds();
-
-    return y + '年' + formatNumber(m) + '月' + formatNumber(d) + '日 ' + formatNumber(h) + ':' + formatNumber(mm) + ':' + formatNumber(s);
-}
-function formatNumber(n){
-	if(n < 10){
-		n =  "0" + n;
-	}
-	return n;
-}
 
 module.exports = router;

@@ -101,7 +101,7 @@ $(function(){
 	    			html.push('<td>'+ item.name +'</td>');
 	    			html.push('<td>'+ item.desc +'</td>');
                     html.push('<td>'+ item.postTime + '</td>');
-	    			html.push('<td><a href="/mockdata/edit?name='+ item.name +'">编辑</a> <a href="javascript:" class="delete" data-name="'+ item.name +'">删除</a></td>');
+	    			html.push('<td><a href="/mockdata/edit?name='+ item.name +'">编辑</a> <a href="javascript:;" class="delete" data-name="'+ item.name +'">删除</a></td>');
 	    			html.push('</tr>');
 
     			});
@@ -119,7 +119,7 @@ $(function(){
     });
 
     // 删除数据
-    $(".delete").on("click", function(){
+    $(document).on("click", ".delete", function(){
     	var name = $(this).data("name");
 
          var result = confirm("你确定要删除 " + name + " 接口吗？");

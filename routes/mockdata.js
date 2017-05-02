@@ -2,39 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require("fs");
 var baseDir = global.baseDir;
-
-function readJsonFile(fp){
-	var data = fs.readFileSync(fp);
-
-	data = data.toString();
-
-	try{
-		data = JSON.parse(data);
-	}catch(e){
-		data = {};
-	}
-	
-	return data;
-}
-
-function formatDate(d) {
-    var date1 = new Date(d);
-    var y = date1.getFullYear();
-    var m = (date1.getMonth()+1);
-    var d = date1.getDate();
-    var h = date1.getHours();
-    var mm = date1.getMinutes();
-    var s = date1.getSeconds();
-
-    return y + '年' + formatNumber(m) + '月' + formatNumber(d) + '日 ' + formatNumber(h) + ':' + formatNumber(mm) + ':' + formatNumber(s);
-}
-
-function formatNumber(n){
-	if(n < 10){
-		n =  "0" + n;
-	}
-	return n;
-}
+var util = require('../lib/util.js');
 
 /**
  * 接口管理 - 首页
@@ -42,7 +10,8 @@ function formatNumber(n){
 router.get('/', function (req, res, next){
 
 	var mapPath = baseDir + "/mockdata/map.json";
-	var mapData = readJsonFile(mapPath);
+
+	var mapData = util.readJsonFile(mapPath);
 
 	// 数据长度
 	var count = mapData.list.length || 0;
@@ -59,7 +28,7 @@ router.get('/', function (req, res, next){
 
 	// 日期格式化
 	list.forEach(function(item, index){
-		item.postTime = formatDate(item.postTime);
+		item.postTime = util.formatDate(item.postTime);
 	});
 
     res.render("main/mockdata_index", {
@@ -79,7 +48,7 @@ router.get('/edit', function (req, res, next){
 
 	var queryName = req.query.name || "";
 	var mapPath = baseDir + "/mockdata/map.json";
-	var mapData = readJsonFile(mapPath);
+	var mapData = util.readJsonFile(mapPath);
 	
 	var mock = mapData.list.find(function(item){
 		return item.name == queryName;
@@ -91,7 +60,7 @@ router.get('/edit', function (req, res, next){
 		
 		var mockdata_filename = queryName.replace(/\//gi,"__");
 		var mockDataPath = baseDir + "/mockdata/" + mockdata_filename + ".json";
-		var json = readJsonFile(mockDataPath);
+		var json = util.readJsonFile(mockDataPath);
 
 		res.render("main/mockdata_edit", {
 			name: name,
