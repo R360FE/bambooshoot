@@ -2,13 +2,13 @@
 
 ## What's bambooshoot?
 
-an application used by FE to generate mockdata of server's interface response. It's also can serve as a server to replace the response of serverside interface.
+an application used by FE to generate mockdata of server's interface response. It also can serve as a server to replace the response of serverside interface.
 
 ## How to use it?
 
-### 1 use npm install bambootshoot.
+### 1 use npm install bambooshoot.
       
-      npm install bambootshoot
+      npm install bambooshoot [-g]
  
 ### 2 start the server and the default port is 3000 if you don't pass the option -p
 
@@ -18,7 +18,7 @@ the browser will open the mock server site. eg:https://127.0.0.1:3000
 
 ### 3 current commands
 
-You can use 'bamboo' to list the commands that current support
+You can use 'bamboo' to list the supported commands
 
       bamboo
       
