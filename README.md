@@ -1,9 +1,10 @@
-#bambooshoot
-##What's bambooshoot?
+# bambooshoot
+
+## What's bambooshoot?
 
 an application used by FE to generate mockdata of server's interface response. It's also can serve as a server to replace the response of serverside interface.
 
-##How to use it?
+## How to use it?
 
 ### 1 use npm install bambootshoot.
       
@@ -32,3 +33,9 @@ You can use 'bamboo' to list the commands that current support
          -v, --version  output the version number
          
          -p, --port  set the server port
+
+### 4 https://127.0.0.1:3000
+
+1) use proxy like charles, fiddler to map the path you want to mock repsonse
+
+2) the response data should be like {"test": "test"}, double-qoute is required
