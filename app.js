@@ -10,6 +10,7 @@ var fs = require("fs");
 
 global.baseDir = __dirname;
 
+
 var app = express();
 
 // view engine setup
